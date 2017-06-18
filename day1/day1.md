@@ -27,10 +27,17 @@ sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
 
 Install PyGame
 ```
-sudo pip3 install pygame
+sudo pip3 install pygame ipython
 ```
 
 Open FireFox to Download PyCharm (Python IDE)
 ```
 https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=linux
+```
+Test PyGame library
+```
+ipython
+```
+```
+import pygame
 ```
