@@ -5,13 +5,32 @@ pygame.init()
 
 # setup windows/surface
 # 800 width, 600 height
-gameDisplay = pygame.display.set_mode((800,600))
+
+# explicitly define to be able to refer to later
+display_width = 800
+display_height = 600
+gameDisplay = pygame.display.set_mode((display_width,display_height))
+
+# define colors (RGB)
+black = (0,0,0)
+white = (255,255,255)
+red = (255,0,0)
 
 # Window title
 pygame.display.set_caption('My game')
 
 # define the game clock for timing feature
 clock = pygame.time.Clock()
+
+carImg = pygame.image.load('racecar.png')
+
+def car(x,y):
+    # place the car to the display
+    gameDisplay.blit(carImg, (x,y))
+
+# Initial car location
+x = (display_width * 0.45)
+y = (display_height * 0.8)
 
 # Game loop
 # if the game crash exit the game
@@ -26,6 +45,9 @@ while not crashed:
             crashed = True
         print(event)
 
+    # pour white color on display
+    gameDisplay.fill(white)
+    car(x,y)
     # display after the above processing
     pygame.display.update()
 
