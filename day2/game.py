@@ -1,5 +1,5 @@
 import pygame
-import time
+import random
 
 # initiate pygame with all the modules
 pygame.init()
@@ -25,6 +25,10 @@ clock = pygame.time.Clock()
 
 carImg = pygame.image.load('racecar.png')
 car_width = 73
+
+def things(thingx, thingy, thingw, thingh, color):
+    # draw a box to the screen
+    pygame.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
 
 def car(x,y):
     # place the car to the display
@@ -55,6 +59,15 @@ def game_loop():
 
     x_change = 0
 
+    # starting values for thing
+    thing_startx = random.randrange(0, display_width)
+    # 600 px off the screen
+    thing_starty = -600
+    # move it up 7 px every frame
+    thing_speed = 7
+    thing_width = 100
+    thing_height = 100
+
     # Game loop
     # if the game crash exit the game
     gameExit = False
@@ -81,11 +94,22 @@ def game_loop():
 
         # pour white color on display
         gameDisplay.fill(white)
+
+        things(thing_startx, thing_starty, thing_width, thing_height, black)
+        # add 7 px to y of thing every frame
+        thing_starty += thing_speed
+
         car(x,y)
 
         # x is on top left of the car
         if x > display_width - car_width or x < 0:
             crash()
+        # check thing if off the screen
+        # y measure from top down
+        if thing_starty > display_height:
+            # immediately shows thing after it goes off
+            thing_starty = 0 - thing_height
+            thing_startx = random.randrange(0, display_width)
 
 
         # display after the above processing
