@@ -37,15 +37,15 @@ def game_loop():
 
     # Game loop
     # if the game crash exit the game
-    crashed = False
+    gameExit = False
 
-    while not crashed:
+    while not gameExit:
         # get any events that happen
         # e.g. mouse, keyboard
         for event in pygame.event.get():
             # if x button (close window)
             if event.type == pygame.QUIT:
-                crashed = True
+                gameExit = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     x_change = -5
