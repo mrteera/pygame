@@ -26,6 +26,12 @@ clock = pygame.time.Clock()
 carImg = pygame.image.load('racecar.png')
 car_width = 73
 
+def things_dodged(count):
+    font = pygame.font.SysFont(None, 25)
+    text = font.render("Dodged: " + str(count), True, black)
+    gameDisplay.blit(text, (0,0))
+
+
 def things(thingx, thingy, thingw, thingh, color):
     # draw a box to the screen
     pygame.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
@@ -68,6 +74,8 @@ def game_loop():
     thing_width = 100
     thing_height = 100
 
+    dodged = 0
+
     # Game loop
     # if the game crash exit the game
     gameExit = False
@@ -101,6 +109,8 @@ def game_loop():
 
         car(x,y)
 
+        things_dodged(dodged)
+
         # x is on top left of the car
         if x > display_width - car_width or x < 0:
             crash()
@@ -110,6 +120,7 @@ def game_loop():
             # immediately shows thing after it goes off
             thing_starty = 0 - thing_height
             thing_startx = random.randrange(0, display_width)
+            dodged += 1
 
         # check things over the car
         if y < thing_starty+thing_height:
