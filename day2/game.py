@@ -111,6 +111,14 @@ def game_loop():
             thing_starty = 0 - thing_height
             thing_startx = random.randrange(0, display_width)
 
+        # check things over the car
+        if y < thing_starty+thing_height:
+            print('y crossover')
+            # check top left and top right of the car if it's inside bottom of the box
+            if x > thing_startx and x < thing_startx+thing_width or x+car_width > thing_startx and x+car_width < thing_startx+thing_width:
+                print('x crossover')
+                crash()
+
 
         # display after the above processing
         pygame.display.update()
