@@ -1,4 +1,5 @@
 import pygame
+import time
 
 # initiate pygame with all the modules
 pygame.init()
@@ -29,6 +30,24 @@ def car(x,y):
     # place the car to the display
     gameDisplay.blit(carImg, (x,y))
 
+def text_objects(text, font):
+    textSurface = font.render(text, True, black)
+    return textSurface, textSurface.get_rect()
+
+def message_display(text):
+    largeText = pygame.font.Font('freesansbold.ttf', 100)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = ((display_width/2), (display_height/2))
+    gameDisplay.blit(TextSurf, TextRect)
+    pygame.display.update()
+    # I think pygame expect to handle all events before update the display
+    pygame.event.get()
+    pygame.time.wait(1000)
+    game_loop()
+
+def crash():
+    message_display('You crashed')
+
 def game_loop():
     # Initial car location
     x = (display_width * 0.45)
@@ -46,7 +65,8 @@ def game_loop():
         for event in pygame.event.get():
             # if x button (close window)
             if event.type == pygame.QUIT:
-                gameExit = True
+                pygame.quit()
+                quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
                     x_change = -5
@@ -65,7 +85,8 @@ def game_loop():
 
         # x is on top left of the car
         if x > display_width - car_width or x < 0:
-            gameExit = True
+            crash()
+
 
         # display after the above processing
         pygame.display.update()
@@ -73,7 +94,7 @@ def game_loop():
         # move the frame on, define frame per second
         # how fast we want to update the frame
         # e.g. 30 fps
-        clock.tick(30)
+        clock.tick(60)
 
 game_loop()
 # stop pygame
