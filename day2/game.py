@@ -23,6 +23,7 @@ pygame.display.set_caption('My game')
 clock = pygame.time.Clock()
 
 carImg = pygame.image.load('racecar.png')
+car_width = 73
 
 def car(x,y):
     # place the car to the display
@@ -61,6 +62,11 @@ def game_loop():
         # pour white color on display
         gameDisplay.fill(white)
         car(x,y)
+
+        # x is on top left of the car
+        if x > display_width - car_width or x < 0:
+            gameExit = True
+
         # display after the above processing
         pygame.display.update()
 
