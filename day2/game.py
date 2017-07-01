@@ -70,7 +70,7 @@ def game_loop():
     # 600 px off the screen
     thing_starty = -600
     # move it up 7 px every frame
-    thing_speed = 7
+    thing_speed = 4
     thing_width = 100
     thing_height = 100
 
@@ -90,9 +90,9 @@ def game_loop():
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    x_change = -5
+                    x_change = -20
                 elif event.key == pygame.K_RIGHT:
-                    x_change = 5
+                    x_change = 20
             # if the key has been released
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -121,6 +121,7 @@ def game_loop():
             thing_starty = 0 - thing_height
             thing_startx = random.randrange(0, display_width)
             dodged += 1
+            thing_speed += 1
 
         # check things over the car
         if y < thing_starty+thing_height:
