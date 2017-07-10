@@ -61,6 +61,29 @@ def message_display(text):
 def crash():
     message_display('You crashed')
 
+# ic: inactive color, ac: active color
+def button(msg, x, y, w, h, ic, ac):
+    mouse = pygame.mouse.get_pos()
+    # print(mouse)
+
+    # 150 << x-coordinate + 100 (width)
+    # right side of the box
+    # 4550+50 << bottom of the box
+    # replace 150 with x
+    # replace 450 with y
+    # replace 100 with w
+    # replace 50 with h
+    if x + w > mouse[0] > x and y + h > mouse[1] > y:
+        pygame.draw.rect(gameDisplay, ac, (x, y, w, h))
+    else:
+        pygame.draw.rect(gameDisplay, ic, (x, y, w, h))
+
+    smallText = pygame.font.Font('freesansbold.ttf', 20)
+    textSurf, textRect = text_objects(msg, smallText)
+    # center at x coordinate and y coordinate
+    textRect.center = ((x + (w / 2)), (y + (h / 2)))
+    gameDisplay.blit(textSurf, textRect)
+
 # a separate sequence, just one time run
 def game_intro():
     intro = True
@@ -78,24 +101,8 @@ def game_intro():
         TextRect.center = ((display_width / 2), (display_height / 2))
         gameDisplay.blit(TextSurf, TextRect)
 
-        mouse = pygame.mouse.get_pos()
-        # print(mouse)
-
-        # 150 << x-coordinate + 100 (width)
-        # right side of the box
-        # 4550+50 << bottom of the box
-        if 150+100 > mouse[0] > 150 and 450+50 > mouse[1] > 450:
-            pygame.draw.rect(gameDisplay, bright_green, (150, 450, 100, 50))
-        else:
-            pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
-
-        smallText = pygame.font.Font('freesansbold.ttf', 20)
-        textSurf, textRect = text_objects("GO!", smallText)
-        # center at x coordinate and y coordinate
-        textRect.center = ((150 + (100 / 2)), (450 + (50 / 2)))
-        gameDisplay.blit(textSurf, textRect)
-
-        pygame.draw.rect(gameDisplay, red, (500, 450, 100, 50))
+        button('Go!', 150, 450, 100, 50, green, bright_green)
+        button('Quit', 500, 450, 100, 50, red, bright_red)
 
         pygame.display.update()
         clock.tick(15)
