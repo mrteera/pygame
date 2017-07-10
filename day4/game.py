@@ -89,7 +89,12 @@ def game_intro():
         else:
             pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
 
-        
+        smallText = pygame.font.Font('freesansbold.ttf', 20)
+        textSurf, textRect = text_objects("GO!", smallText)
+        # center at x coordinate and y coordinate
+        textRect.center = ((150 + (100 / 2)), (450 + (50 / 2)))
+        gameDisplay.blit(textSurf, textRect)
+
         pygame.draw.rect(gameDisplay, red, (500, 450, 100, 50))
 
         pygame.display.update()
