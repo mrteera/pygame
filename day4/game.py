@@ -16,6 +16,7 @@ gameDisplay = pygame.display.set_mode((display_width,display_height))
 black = (0,0,0)
 white = (255,255,255)
 red = (255,0,0)
+green = (0,200,0)
 
 # Window title
 pygame.display.set_caption('My game')
@@ -64,6 +65,7 @@ def game_intro():
 
     while intro:
         for event in pygame.event.get():
+            print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -73,6 +75,10 @@ def game_intro():
         TextSurf, TextRect = text_objects('Fast and Furious', largeText)
         TextRect.center = ((display_width / 2), (display_height / 2))
         gameDisplay.blit(TextSurf, TextRect)
+
+        pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
+        pygame.draw.rect(gameDisplay, red, (500, 450, 100, 50))
+
         pygame.display.update()
         clock.tick(15)
 
