@@ -62,9 +62,10 @@ def crash():
     message_display('You crashed')
 
 # ic: inactive color, ac: active color
-def button(msg, x, y, w, h, ic, ac):
+def button(msg, x, y, w, h, ic, ac, action=None):
     mouse = pygame.mouse.get_pos()
-    # print(mouse)
+    # (left, middle, right) button click
+    click = pygame.mouse.get_pressed()
 
     # 150 << x-coordinate + 100 (width)
     # right side of the box
@@ -75,6 +76,13 @@ def button(msg, x, y, w, h, ic, ac):
     # replace 50 with h
     if x + w > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(gameDisplay, ac, (x, y, w, h))
+        if click[0] == 1 and action != None:
+            action()
+            # if action == 'play':
+            #     game_loop()
+            # elif action == 'quit':
+            #     pygame.quit()
+            #     quit()
     else:
         pygame.draw.rect(gameDisplay, ic, (x, y, w, h))
 
@@ -83,6 +91,10 @@ def button(msg, x, y, w, h, ic, ac):
     # center at x coordinate and y coordinate
     textRect.center = ((x + (w / 2)), (y + (h / 2)))
     gameDisplay.blit(textSurf, textRect)
+
+def quitegame():
+    pygame.quit()
+    quit()
 
 # a separate sequence, just one time run
 def game_intro():
@@ -101,8 +113,9 @@ def game_intro():
         TextRect.center = ((display_width / 2), (display_height / 2))
         gameDisplay.blit(TextSurf, TextRect)
 
-        button('Go!', 150, 450, 100, 50, green, bright_green)
-        button('Quit', 500, 450, 100, 50, red, bright_red)
+        # pass game_loop object
+        button('Go!', 150, 450, 100, 50, green, bright_green, game_loop)
+        button('Quit', 500, 450, 100, 50, red, bright_red, quitegame)
 
         pygame.display.update()
         clock.tick(15)
