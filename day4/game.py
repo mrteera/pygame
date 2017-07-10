@@ -58,6 +58,24 @@ def message_display(text):
 def crash():
     message_display('You crashed')
 
+# a separate sequence, just one time run
+def game_intro():
+    intro = True
+
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(white)
+        largeText = pygame.font.Font('freesansbold.ttf', 90)
+        TextSurf, TextRect = text_objects('Fast and Furious', largeText)
+        TextRect.center = ((display_width / 2), (display_height / 2))
+        gameDisplay.blit(TextSurf, TextRect)
+        pygame.display.update()
+        clock.tick(15)
+
 def game_loop():
     # Initial car location
     x = (display_width * 0.45)
@@ -138,6 +156,7 @@ def game_loop():
         clock.tick(60)
 
 if __name__ == "__main__":
+    game_intro()
     game_loop()
     # stop pygame
     pygame.quit()
