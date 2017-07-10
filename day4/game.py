@@ -29,6 +29,8 @@ clock = pygame.time.Clock()
 carImg = pygame.image.load('racecar.png')
 car_width = 73
 
+pause = False
+
 def things_dodged(count):
     font = pygame.font.SysFont(None, 25)
     text = font.render("Dodged: " + str(count), True, black)
@@ -96,6 +98,31 @@ def quitegame():
     pygame.quit()
     quit()
 
+def unpause():
+    global pause
+    pause = False
+
+def paused():
+    while pause:
+        for event in pygame.event.get():
+            # print(event)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        gameDisplay.fill(white)
+        largeText = pygame.font.Font('freesansbold.ttf', 90)
+        TextSurf, TextRect = text_objects('Paused', largeText)
+        TextRect.center = ((display_width / 2), (display_height / 2))
+        gameDisplay.blit(TextSurf, TextRect)
+
+        # pass game_loop object
+        button('Continue', 150, 450, 100, 50, green, bright_green, unpause)
+        button('Quit', 500, 450, 100, 50, red, bright_red, quitegame)
+
+        pygame.display.update()
+        clock.tick(15)
+
 # a separate sequence, just one time run
 def game_intro():
     intro = True
@@ -121,6 +148,7 @@ def game_intro():
         clock.tick(15)
 
 def game_loop():
+    global pause
     # Initial car location
     x = (display_width * 0.45)
     y = (display_height * 0.8)
@@ -154,6 +182,9 @@ def game_loop():
                     x_change = -20
                 elif event.key == pygame.K_RIGHT:
                     x_change = 20
+                if event.key == pygame.K_p:
+                    pause = True
+                    paused()
             # if the key has been released
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
