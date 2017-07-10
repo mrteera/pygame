@@ -4,6 +4,10 @@ import random
 # initiate pygame with all the modules
 pygame.init()
 
+crash_sound = pygame.mixer.Sound("./Car_Impact_and_scrape.wav")
+pygame.mixer.music.load('./Joy_to_the_World_Jazz.wav')
+pygame.mixer.music.play(-1)
+
 # setup windows/surface
 # 800 width, 600 height
 
@@ -61,6 +65,8 @@ def message_display(text):
     game_loop()
 
 def crash():
+    pygame.mixer.Sound.play(crash_sound)
+    pygame.mixer.music.stop()
     message_display('You crashed')
 
 # ic: inactive color, ac: active color
