@@ -1,5 +1,8 @@
 import pygame
 import random
+from keras.models import Sequential
+from keras.layers.core import Dense
+from keras.optimizers import sgd
 
 # initiate pygame with all the modules
 pygame.init()
@@ -69,8 +72,7 @@ def game_loop():
     thing_startx = random.randrange(0, display_width)
     # 600 px off the screen
     thing_starty = -600
-    # move it up 7 px every frame
-    thing_speed = 4
+    thing_speed = 7
     thing_width = 100
     thing_height = 100
 
@@ -121,14 +123,12 @@ def game_loop():
             thing_starty = 0 - thing_height
             thing_startx = random.randrange(0, display_width)
             dodged += 1
-            thing_speed += 1
+            thing_speed += 0.5
 
         # check things over the car
         if y < thing_starty+thing_height:
-            print('y crossover')
             # check top left and top right of the car if it's inside bottom of the box
             if x > thing_startx and x < thing_startx+thing_width or x+car_width > thing_startx and x+car_width < thing_startx+thing_width:
-                print('x crossover')
                 crash()
 
 
@@ -140,8 +140,26 @@ def game_loop():
         # e.g. 30 fps
         clock.tick(60)
 
-game_loop()
-# stop pygame
-pygame.quit()
-# quit the program
-quit()
+if __name__ == "__main__":
+    # parameters
+    epsilon = .1  # exploration
+    num_actions = 3  # [move_left, stay, move_right]
+    epoch = 1000
+    max_memory = 500
+    hidden_size = 100
+    batch_size = 50
+
+    model = Sequential()
+    model.add(Dense(hidden_size, input_shape=(display_width*display_height,), activation='relu'))
+    model.add(Dense(hidden_size, activation='relu'))
+    model.add(Dense(num_actions))
+    model.compile(sgd(lr=.2), "mse")
+
+    # initialize game here
+    # env = Race()
+
+    game_loop()
+    # stop pygame
+    pygame.quit()
+    # quit the program
+    quit()
