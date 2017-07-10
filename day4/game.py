@@ -15,8 +15,10 @@ gameDisplay = pygame.display.set_mode((display_width,display_height))
 # define colors (RGB)
 black = (0,0,0)
 white = (255,255,255)
-red = (255,0,0)
+red = (200,0,0)
 green = (0,200,0)
+bright_red = (255,0,0)
+bright_green = (0,255,0)
 
 # Window title
 pygame.display.set_caption('My game')
@@ -65,7 +67,7 @@ def game_intro():
 
     while intro:
         for event in pygame.event.get():
-            print(event)
+            # print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
@@ -76,7 +78,18 @@ def game_intro():
         TextRect.center = ((display_width / 2), (display_height / 2))
         gameDisplay.blit(TextSurf, TextRect)
 
-        pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
+        mouse = pygame.mouse.get_pos()
+        # print(mouse)
+
+        # 150 << x-coordinate + 100 (width)
+        # right side of the box
+        # 4550+50 << bottom of the box
+        if 150+100 > mouse[0] > 150 and 450+50 > mouse[1] > 450:
+            pygame.draw.rect(gameDisplay, bright_green, (150, 450, 100, 50))
+        else:
+            pygame.draw.rect(gameDisplay, green, (150, 450, 100, 50))
+
+        
         pygame.draw.rect(gameDisplay, red, (500, 450, 100, 50))
 
         pygame.display.update()
